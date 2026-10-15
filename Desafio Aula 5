@@ -1,0 +1,33 @@
+ kubectl scale deployment web-aula5 --replicas=5
+deployment.apps/web-aula5 scaled
+root@controlplane:~$ kubectl get pods
+NAME                         READY   STATUS    RESTARTS   AGE
+web-aula5-779c6f9566-88bkr   1/1     Running   0          14s
+web-aula5-779c6f9566-bd9rj   1/1     Running   0          14s
+web-aula5-779c6f9566-g7zh4   1/1     Running   0          4m52s
+web-aula5-779c6f9566-lhb9q   1/1     Running   0          8m11s
+web-aula5-779c6f9566-mrvcp   1/1     Running   0          10m
+root@controlplane:~$ kubectl delete pod $(kubectl get pods -0 jsonpath='{.items[0].metadata.name}')
+error: unknown shorthand flag: '0' in -0
+See 'kubectl get --help' for usage.
+error: resource(s) were provided, but no name was specified
+root@controlplane:~$ kubectl get pods
+NAME                         READY   STATUS    RESTARTS   AGE
+web-aula5-779c6f9566-88bkr   1/1     Running   0          2m1s
+web-aula5-779c6f9566-bd9rj   1/1     Running   0          2m1s
+web-aula5-779c6f9566-g7zh4   1/1     Running   0          6m39s
+web-aula5-779c6f9566-lhb9q   1/1     Running   0          9m58s
+web-aula5-779c6f9566-mrvcp   1/1     Running   0          12m
+root@controlplane:~$ kubectl get deployment,replicaset,pods
+NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/web-aula5   5/5     5            5           12m
+
+NAME                                   DESIRED   CURRENT   READY   AGE
+replicaset.apps/web-aula5-779c6f9566   5         5         5       12m
+
+NAME                             READY   STATUS    RESTARTS   AGE
+pod/web-aula5-779c6f9566-88bkr   1/1     Running   0          2m26s
+pod/web-aula5-779c6f9566-bd9rj   1/1     Running   0          2m26s
+pod/web-aula5-779c6f9566-g7zh4   1/1     Running   0          7m4s
+pod/web-aula5-779c6f9566-lhb9q   1/1     Running   0          10m
+pod/web-aula5-779c6f9566-mrvcp   1/1     Running   0          12m
